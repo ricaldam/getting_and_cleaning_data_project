@@ -3,19 +3,22 @@ library(dplyr)
 
 
 # 1. Merges the training and the test sets to create one data set.
-# Raw data must be in the 
+# Raw data must be in the working directory 
 
 train.subject <- read.table("./raw_data/train/subject_train.txt")
 test.subject <- read.table("./raw_data/test/subject_test.txt")
 merged.subject<- rbind(train.subject, test.subject)
 
-train.set <- read.table("./raw_data/train/X_train.txt")
-test.set <- read.table("./raw_data/test/X_test.txt")
-merged.set <- rbind(train.set, test.set)
 
 train.label <- read.table("./raw_data/train/y_train.txt")
 test.label <- read.table("./raw_data/test/y_test.txt")
 merged.label <- rbind(train.label, test.label)
+
+
+train.set <- read.table("./raw_data/train/X_train.txt")
+test.set <- read.table("./raw_data/test/X_test.txt")
+merged.set <- rbind(train.set, test.set)
+
 
 
 # 2. Extracts only the measurements on the mean and standard deviation for each 
@@ -24,9 +27,6 @@ merged.label <- rbind(train.label, test.label)
 features <- read.table("./raw_data/features.txt")
 indexes.mean.std <- grep("mean\\(\\)|std\\(\\)", features[,2])
 merged.set <- select(merged.set, indexes.mean.std)
-
-# TODO remove
-dim(merged.set) # 10299 x 66
 
 
 # 3. Uses descriptive activity names to name the activities in the data set
@@ -47,7 +47,7 @@ merged.activity <- data.frame(activity.names[merged.label[, 1], 2])
 names(merged.subject) <- "subject"
 names(merged.activity) <- "activity"
 raw.feature.names <- features[indexes.mean.std, 2]
-# handy function for cleaning variable names corresponding to features
+# function for cleaning variable names corresponding to features
 renameFeatures <- function(x){
   x <- gsub("mean\\(\\)", "mean", x)
   x <- gsub("std\\(\\)", "std", x)
@@ -75,6 +75,6 @@ merged.data <- cbind(merged.subject, merged.activity, merged.set)
 groups <- group_by(merged.data, subject, activity)
 summary <- summarise_each(groups, funs(mean))
 
-write.table(summary, "data_summary.txt", row.name=FALSE)
+#write.table(summary, "data_summary.txt", row.name=FALSE)
 
 
