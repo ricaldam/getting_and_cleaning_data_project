@@ -39,6 +39,7 @@ capitalize <- function(x){
   paste(toupper(substring(s,1,1)), substring(s,2), sep ="", collapse = " ")  
 }
 activity.names[,2] <- as.character(lapply(activity.names[,2], capitalize))
+# all the data corresponding to activity names is stored in *merged.activity*
 merged.activity <- data.frame(activity.names[merged.label[, 1], 2])
 
 
@@ -66,6 +67,7 @@ renameFeatures <- function(x){
 feature.names <- as.character(lapply(raw.feature.names, renameFeatures))
 names(merged.set) <- feature.names
 
+# All the requested data is combined in this tidy data set
 merged.data <- cbind(merged.subject, merged.activity, merged.set)
 
 
@@ -75,6 +77,6 @@ merged.data <- cbind(merged.subject, merged.activity, merged.set)
 groups <- group_by(merged.data, subject, activity)
 summary <- summarise_each(groups, funs(mean))
 
-#write.table(summary, "data_summary.txt", row.name=FALSE)
+write.table(summary, "data_summary.txt", row.name=FALSE)
 
 

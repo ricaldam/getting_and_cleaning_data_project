@@ -1,1 +1,6 @@
 raw_data
+"..\tidy_features.txt"
+README.html
+codebook.html
+codebook.rmd
+.gitignore~

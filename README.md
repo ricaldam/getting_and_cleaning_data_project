@@ -52,7 +52,8 @@ all the tidy information.
 
 5. We use the powerful library *dplyr* to easily summarize the information 
 contained in *merged.data* as requested. Concretely, for each combination 
-subject-activity we compute the mean of each variable.
+subject-activity we compute the mean of each variable and we store it in 
+the object *summary*. Finally this object is exported to the file *data_summary.txt*.
 
 
 
